@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using Fiver.Api.Versioning.Controllers;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
@@ -24,6 +25,9 @@ namespace Fiver.Api.Versioning
                 options.AssumeDefaultVersionWhenUnspecified = true;
                 options.DefaultApiVersion = new ApiVersion(1, 0);
                 options.ApiVersionReader = new HeaderApiVersionReader("api-version");
+
+                options.Conventions.Controller<WritersControllerV1>().HasApiVersion(new ApiVersion(1, 0));
+                options.Conventions.Controller<WritersControllerV2>().HasApiVersion(new ApiVersion(2, 0));
             });
 
             services.AddMvc();
